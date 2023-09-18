@@ -1,3 +1,4 @@
+import usePost from "./usePosts";
 import useTodos from "./useTodos";
 
 export interface Todo {
@@ -5,12 +6,13 @@ export interface Todo {
     title: string
 }
 const TodoList = () => {
-    const {todos, error} = useTodos()
+    // const { data, error} = useTodos()
+    const {data, error} = usePost()
     if (error) return (<p>{error.message}</p>)
 
     return (
         <ul className="list-group">
-            {todos?.map(todo => (
+            {data?.map(todo => (
                 <li className="list-group-item" key={todo.id}>{todo.title}</li>
             ))}
         </ul>
