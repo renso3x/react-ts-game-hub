@@ -28,5 +28,5 @@ const useGames = (gameQuery: GameQuery) =>
     },
     [gameQuery]
   );
-
+  
 export default useGames;
