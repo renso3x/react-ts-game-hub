@@ -1,13 +1,13 @@
 import usePost from "./usePosts";
-import useTodos from "./useTodos";
 
 export interface Todo {
     id: number;
     title: string
 }
 const TodoList = () => {
-    // const { data, error} = useTodos()
-    const {data, error} = usePost()
+    const {data, error, isLoading} = usePost()
+    
+    if (isLoading) return (<p>Loading</p>)
     if (error) return (<p>{error.message}</p>)
 
     return (
