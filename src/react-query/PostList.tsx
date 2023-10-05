@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import usePost from "./usePosts";
 
 export interface Todo {
@@ -7,9 +7,8 @@ export interface Todo {
 }
 const PostList = () => {
     const pageSize = 10
-    const [page, setPage] = useState<number>(1)
     const [userId, setUserId] = useState<number>()
-    const {data, error, isLoading} = usePost({ page, pageSize, userId })
+    const {data, error, isLoading, fetchNextPage, isFetchingNextPage } = usePost({ userId, pageSize })
     
     if (isLoading) return (<p>Loading</p>)
     if (error) return (<p>{error.message}</p>)
@@ -26,18 +25,30 @@ const PostList = () => {
                 <option value="2">User 2</option>
                 <option value="3">User 3</option>
             </select>
+            
             <ul className="list-group">
-                {data?.map(todo => (
+                {/* {data?.map(todo => (
                     <li className="list-group-item" key={todo.id}>{todo.title}</li>
-                ))}
+                ))} */}
+                {data.pages.map((page, index) => 
+                    <Fragment key={index}>
+                        {page.map(post => (
+                            <li className="list-group-item" key={post.id}>{post.title}</li>
+                        ))}
+                    </Fragment>
+                )}
             </ul>
-            <button 
+            {/* <button 
                 disabled={page === 1} 
                 onClick={() => setPage(page-1)}
                 className="btn btn-primary">Prev</button>
-                <button 
+            <button 
                 onClick={() => setPage(page+1)}
-                className="btn btn-primary">Next</button>
+                className="btn btn-primary">Next</button> */}
+                <br />
+            <button 
+                disabled={isFetchingNextPage}
+                onClick={() => fetchNextPage() }>{isFetchingNextPage ? 'Loading': 'Load More'}</button>
             
         </>
     );
