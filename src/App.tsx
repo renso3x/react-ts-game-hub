@@ -9,7 +9,6 @@ import { Platform } from "./hooks/useGames";
 import PlatformSelector from "./components/PlatformSelector";
 import SortSelector from "./components/SortSelector";
 import { useState } from "react";
-import PostList from "./react-query/PostList";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -21,7 +20,6 @@ export interface GameQuery {
 function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
-  return <PostList />
   return (
     <Grid
       templateAreas={{
