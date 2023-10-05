@@ -6,8 +6,10 @@ export interface Todo {
     title: string
 }
 const PostList = () => {
+    const pageSize = 10
+    const [page, setPage] = useState<number>(1)
     const [userId, setUserId] = useState<number>()
-    const {data, error, isLoading} = usePost(userId)
+    const {data, error, isLoading} = usePost({ page, pageSize, userId })
     
     if (isLoading) return (<p>Loading</p>)
     if (error) return (<p>{error.message}</p>)
@@ -29,6 +31,14 @@ const PostList = () => {
                     <li className="list-group-item" key={todo.id}>{todo.title}</li>
                 ))}
             </ul>
+            <button 
+                disabled={page === 1} 
+                onClick={() => setPage(page-1)}
+                className="btn btn-primary">Prev</button>
+                <button 
+                onClick={() => setPage(page+1)}
+                className="btn btn-primary">Next</button>
+            
         </>
     );
 }
