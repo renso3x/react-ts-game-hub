@@ -4,6 +4,7 @@ import { CACHE_KEY_GAMES } from "../constants";
 import ms from "ms";
 import APIClient, { FetchResponse } from "../services/api-client";
 import { Platform } from "./usePlatforms";
+import useGameQueryStore from "../store";
 
 export interface Game {
   id: number;
@@ -16,8 +17,10 @@ export interface Game {
 
 const apiClient = new APIClient<Game>("games");
 
-const useGames = (gameQuery: GameQuery) =>
-  useInfiniteQuery<FetchResponse<Game>, Error>({
+const useGames = () => {
+  const gameQuery = useGameQueryStore((s) => s.gameQuery);
+
+  return useInfiniteQuery<FetchResponse<Game>, Error>({
     queryKey: [CACHE_KEY_GAMES, gameQuery],
     queryFn: () =>
       apiClient.getAll({
@@ -33,5 +36,6 @@ const useGames = (gameQuery: GameQuery) =>
     },
     staleTime: ms("24h"), // 24hrs
   });
+};
 
 export default useGames;
