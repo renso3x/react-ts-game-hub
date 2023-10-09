@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
     <HStack justifyContent={"space-between"} padding="10px">
       <Link to="/">
-        <Image boxSize={"60px"} src={logo} objectFit={"cover"} />
+        <Image boxSize="60px" src={logo} objectFit={"cover"} />
       </Link>
       <SearchInput />
       <ColorModeSwitch />
